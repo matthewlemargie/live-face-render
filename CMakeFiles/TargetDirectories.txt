@@ -1,3 +1,0 @@
-/home/dmac/Documents/projects2025/comms/CMakeFiles/main.dir
-/home/dmac/Documents/projects2025/comms/CMakeFiles/edit_cache.dir
-/home/dmac/Documents/projects2025/comms/CMakeFiles/rebuild_cache.dir
