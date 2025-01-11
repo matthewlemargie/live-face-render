@@ -16,10 +16,6 @@
 #include "shaderClass.h"
 #include "Scene.h"
 
-struct Landmark {
-    float x, y, z;
-};
-
 int main()
 {
     const char* SHM_NAME = "landmarks_shm";
@@ -98,15 +94,7 @@ int main()
             float* data = static_cast<float*>(shm_ptr);
 
             // Read landmarks
-            std::vector<Landmark> landmarks;
-            size_t i = 0;
-            // while (data[i] != 0.0f) {  // Null-terminated data
-                // positions[i] = data[i];
-                // std::cout << positions[i] << std::endl;
-                // i += 1;
-            // }
-            for (int i = 0; i < 468 * 3; i++)
-            {
+            for (int i = 0; i < 468 * 3; i++) {
                 positions[i] = data[i];
             }
             
