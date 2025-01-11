@@ -25,7 +25,7 @@ public:
 
 	void addVertices(std::vector<Vertex>& vertices);
 	void addInstance(std::vector<glm::mat4>& instanceMats);
-	void resetInstances(float* instances);
+	void resetInstances(void* instances);
 	void Bind();
 	void bindInstance();
 	void Unbind();

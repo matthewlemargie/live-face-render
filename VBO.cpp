@@ -10,6 +10,8 @@ void VBO::addVertices(std::vector<Vertex>& vertices)
 {
 	glBindBuffer(GL_ARRAY_BUFFER, ID);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), vertices.data(), GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, instanceID);
+	glBufferData(GL_ARRAY_BUFFER, 468 * 3 * sizeof(float), nullptr, GL_STATIC_DRAW);
 }
 
 void VBO::addInstance(std::vector<glm::mat4>& instanceMats)
@@ -19,17 +21,11 @@ void VBO::addInstance(std::vector<glm::mat4>& instanceMats)
 	numInstances += (instanceMats.size());
 }
 
-//void VBO::resetInstances(std::vector<glm::mat4>& instanceMats)
-//{
-//	glBindBuffer(GL_ARRAY_BUFFER, instanceID);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4) * instanceMats.size(), instanceMats.data(), GL_STATIC_DRAW);
-//	numInstances = instanceMats.size();
-//}
-
-void VBO::resetInstances(float* instances)
+void VBO::resetInstances(void* instances)
 {
 	glBindBuffer(GL_ARRAY_BUFFER, instanceID);
-	glBufferData(GL_ARRAY_BUFFER, 468 * 3 * sizeof(float), instances, GL_STATIC_DRAW);
+	glBufferSubData(GL_ARRAY_BUFFER, 0, 468 * 3 * sizeof(float), instances);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 void VBO::Bind()

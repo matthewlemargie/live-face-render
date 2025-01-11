@@ -70,9 +70,7 @@ int main()
 
 	Mesh box("box.obj");
 	Shader shader("face.vert", "face.frag");
-	Camera camera(mode->width, mode->height, glm::vec3(0.0f, 0.0f, -10.0f), 90.0f, 1.0f, 1000.0f);
-	Scene scene(&camera);
-	scene.addObject(box, shader, glm::vec2(1.0f));
+	Camera camera(mode->width, mode->height, glm::vec3(0.0f, 0.0f, -10.0f), 90.0f, 1.0f, 100.0f);
 
 	glm::vec3 lightPos = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec4 lightColor = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
@@ -82,22 +80,14 @@ int main()
 	glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
 
-
-	// Loop for returning frames from the webcam
     try
     {
         while (!(glfwWindowShouldClose(window)))
         {
-            GLfloat positions[468 * 3];
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-            float* data = static_cast<float*>(shm_ptr);
+            box.vbo.resetInstances(shm_ptr);
 
-            // Read landmarks
-            for (int i = 0; i < 468 * 3; i++) {
-                positions[i] = data[i];
-            }
-            
             shader.Activate();
             glUniform1f(glGetUniformLocation(shader.ID, "scale"), scale);
             glUniform4f(glGetUniformLocation(shader.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
@@ -107,7 +97,6 @@ int main()
             camera.updateMatrix();
             camera.Matrix(shader, "camMatrix");
 
-            box.vbo.resetInstances(positions);
             box.Draw();
             glfwSwapBuffers(window);
             glfwPollEvents();
@@ -117,7 +106,6 @@ int main()
         std::cerr << "Error reading from shared memory." << std::endl;
     }
 
-	// Release the webcam and close all OpenCV windows
     munmap(shm_ptr, BUFFER_SIZE);
     close(shm_fd);
 	glfwTerminate();
