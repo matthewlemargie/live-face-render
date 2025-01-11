@@ -19,7 +19,8 @@
 int main()
 {
     const char* SHM_NAME = "landmarks_shm";
-    const size_t BUFFER_SIZE = 65536;  // Must match the Python buffer size
+    // add 1 for null byte
+    const size_t BUFFER_SIZE = 468 * 3 * sizeof(float) + 1;
 
     // Open the shared memory
     int shm_fd = shm_open(SHM_NAME, O_RDONLY, 0666);
@@ -59,6 +60,7 @@ int main()
 		glfwTerminate();
 		return -1;
 	}
+
 	glfwMakeContextCurrent(window);
 	glViewport(0, 0, mode->width, mode->height);
 

@@ -17,7 +17,7 @@ void main()
         scale, 0.0,   0.0,   0.0,
         0.0,   scale, 0.0,   0.0,
         0.0,   0.0,   scale, 0.0,
-        -inst.x, -inst.y, inst.z, 1.0
+        inst.x, inst.y, inst.z, 1.0
     );
 
     vec4 worldPos = instanceModel * vec4(aPos, 1.0f);

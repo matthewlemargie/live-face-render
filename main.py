@@ -10,7 +10,9 @@ mp_drawing = mp.solutions.drawing_utils
 
 # Shared memory setup
 SHM_NAME = "landmarks_shm"
-BUFFER_SIZE = 65536  # Adjust based on the size of your data (64KB here)
+size_of_float = 4
+# add 1 for null byte
+BUFFER_SIZE = 468 * 3 * size_of_float + 1
 
 # Create shared memory
 shm = shared_memory.SharedMemory(name=SHM_NAME, create=True, size=BUFFER_SIZE)
@@ -30,7 +32,7 @@ try:
                 break
 
             # Flip the frame horizontally and convert to RGB
-            frame = cv2.flip(frame, 1)
+            # frame = cv2.flip(frame, 1)
             rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
             # Process the frame
@@ -41,7 +43,7 @@ try:
             if results.multi_face_landmarks:
                 for face_landmarks in results.multi_face_landmarks:
                     for landmark in face_landmarks.landmark:
-                        landmarks_data.append((landmark.x, landmark.y, landmark.z))
+                        landmarks_data.append((landmark.x - 0.5, -(landmark.y - 0.5), landmark.z))
 
             # Serialize data to a binary format
             packed_data = struct.pack(
