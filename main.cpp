@@ -72,12 +72,12 @@ int main()
 
 	Mesh box("box.obj");
 	Shader shader("face.vert", "face.frag");
-	Camera camera(mode->width, mode->height, glm::vec3(0.0f, 0.0f, -10.0f), 90.0f, 1.0f, 100.0f);
+	Camera camera(mode->width, mode->height, glm::vec3(0.0f, 0.0f, -25.0f), 90.0f, 1.0f, 100.0f);
 
 	glm::vec3 lightPos = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec4 lightColor = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
 
-	float scale = 0.05f;
+	float scale = 0.1f;
 
 	glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
